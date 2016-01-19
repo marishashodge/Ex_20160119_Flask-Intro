@@ -10,7 +10,9 @@ app = Flask(__name__)
 AWESOMENESS = [
     'awesome', 'terrific', 'fantastic', 'neato', 'fantabulous', 'wowza', 'oh-so-not-meh',
     'brilliant', 'ducky', 'coolio', 'incredible', 'wonderful', 'smashing', 'lovely']
-
+DISSES = [ 
+  'mean', 'a git', 'unpythonic', 'non-balloonicorn']
+                                                          
 
 @app.route('/')
 def start_here():
@@ -48,9 +50,13 @@ def say_hello():
           <label><input type= "radio" name = "compliments" value = "incredible">Incredible</label>
           <label><input type= "radio" name = "compliments" value = "wonderful">Wonderful</label>
           <label><input type= "radio" name = "compliments" value = "smashing">Smashing</label>
-          <label><input type= "radio" name = "compliments" value = "lovely">Lovely</label>
+          <label><input type= "radio" name = "compliments" value = "lovely">Lovely</label><br>    
 
         </form>
+          <form action ="/diss">
+            <label>Type your name if you want to be insulted! <input type="text" name="person"></label>
+            <input type="submit"><br>
+           </form>
       </body>
     </html>
     """
@@ -73,10 +79,34 @@ def greet_person():
         <title>A Compliment</title>
       </head>
       <body>
-        Hi %s I think you're %s!
+        Hi %s I think you're %s! <br>
       </body>
     </html>
     """ % (player, compliment)
+
+@app.route('/diss')
+def diss_person():
+  """Get user by name."""
+
+  player = request.args.get("person")
+  diss = choice(DISSES)
+  print "it's working"
+
+  return """
+  <!doctype html>
+  <html>
+    <head>
+      <title>A Diss</title>
+    </head>
+    <body>
+      Hi %s I think you're %s!
+    </body>
+  </html>
+  """ % (player, diss)
+
+
+
+
 
 
 if __name__ == '__main__':
